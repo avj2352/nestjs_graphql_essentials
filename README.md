@@ -58,6 +58,48 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## GraphQL Nest JS dependencies
+
+```bash
+# graphql dependencies
+npm i -d graphql graphql-tools @apollo/server @nestjs/graphql @nestjs/apollo
+```
+
+### Migrating to Nest v11 from v10
+The following are some of the breaking changes that needs to be fixed in order to work with the latest versions of NestJS and GraphQL servers. You can find more details in the link below -
+[Using NestJS 11.x + and Apollo 10.x +](https://docs.nestjs.com/graphql/migration-guide)
+
+### Dependencies & Configuration
+Instead of installing the `apollo-server-express` package, you'll have to install `@apollo/server`
+
+```bash
+# replace apollo-server-express with apollo/server
+npm uninstall apollo-server-express
+npm install @apollo/server
+```
+
+The new configuration in `app.module.ts` will look as follows:
+
+```typescript
+
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+
+@Module({
+  imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+
+
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
