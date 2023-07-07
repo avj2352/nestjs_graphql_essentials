@@ -27,5 +27,6 @@ export class StudentService {
       firstName,
       lastName,
     });
+    return this.studentRepository.save(student);
   }
 }
