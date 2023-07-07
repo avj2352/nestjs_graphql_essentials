@@ -11,7 +11,14 @@ import { LessonType } from './lesson.type';
 @Resolver((returns) => LessonType)
 export class LessonResolver {
   constructor(private lessonService: LessonService) {}
-  // define queries
+
+  // fetch all lessons
+  @Query((_) => [LessonType])
+  lessons() {
+    return this.lessonService.getLessons();
+  }
+
+  // define queries by id
   @Query((_) => LessonType)
   lesson(@Args('id') id: string) {
     return this.lessonService.getLessonById(id);
